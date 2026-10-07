@@ -13,15 +13,16 @@ st.set_page_config(
 
 # Estilo e Cabeçalho
 st.title("🚗 Análise e Monitoramento de Acidentes de Trânsito no Brasil")
+
+# Exibição limpa das informações de cabeçalho
 st.markdown("""
-<div style="font-size: 15px; color: #a3adc2; margin-bottom: 20px; line-height: 1.6;">
-    <b>Disciplina:</b> Linguagem de Programação – Análise e Visualização de Dados com Python<br>
-    <b>Professor:</b> Alexandre Neves Louzada<br>
-    <b>Aluno:</b> Carlos Gabriel Anselmo Da Silva<br>
-    <b>Tema 5:</b> Acidentes de Trânsito no Brasil
-</div>
-<hr style="margin-top: 10px; margin-bottom: 25px; border-color: #262730;">
-""", unsafe_allow-html=True)
+**Disciplina:** Linguagem de Programação – Análise e Visualização de Dados com Python  
+**Professor:** Alexandre Neves Louzada  
+**Aluno:** Carlos Gabriel Anselmo Da Silva  
+**Tema 5:** Acidentes de Trânsito no Brasil
+""")
+
+st.divider()
 
 # Carregamento de dados (via SQLite/Pandas)
 @st.cache_data
@@ -49,7 +50,7 @@ regioes_selecionadas = st.sidebar.multiselect("Selecione a(s) Região(ões):", r
 
 df_filtrado_reg = df[df['regiao'].isin(regioes_selecionadas)]
 ufs_disponiveis = sorted(df_filtrado_reg['uf'].unique().tolist())
-ufs_selecionadas = st.sidebar.multiselect("Selecione a(s) UF(s):", ufs_disponiveis, default=ufs_disponiveis)
+ufs_selecionadas = st.sidebar.multiselect("Selecione a(s) UF(s):", ufs_disponiveis, default=ufs_selecionadas)
 
 climas_disponiveis = sorted(df['condicao_climatica'].unique().tolist())
 climas_selecionados = st.sidebar.multiselect("Condição Climática:", climas_disponiveis, default=climas_disponiveis)
@@ -128,6 +129,3 @@ else:
     **Direcionamento Estratégico:** A análise interativa permite mapear detalhadamente os pontos críticos da malha viária brasileira. 
     Recomenda-se focar ações educativas e de fiscalização preventiva nas regiões e períodos com condições climáticas adversas e maior proporção de vítimas por ocorrência.
     """)
-
-
-Só copiar esse código, substituir no seu `app.py` no GitHub e salvar (**Commit changes**)! O Streamlit atualizará na hora.
