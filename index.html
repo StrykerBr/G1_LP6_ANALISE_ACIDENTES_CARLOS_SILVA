@@ -4,90 +4,216 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Análise de Acidentes de Trânsito no Brasil</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
+        :root {
+            --bg-color: #0e1117;
+            --card-bg: #161b22;
+            --card-border: #262730;
+            --text-primary: #fafafa;
+            --text-secondary: #a3adc2;
+            --accent-blue: #4f8bf9;
+            --accent-red: #ff4b4b;
+            --accent-hover: #e03e3e;
+        }
+
+        * {
             margin: 0;
             padding: 0;
-            background-color: #f4f7f6;
-            color: #333;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
         }
-        header {
-            background-color: #1e3d59;
-            color: #fff;
-            padding: 2rem 1rem;
-            text-align: center;
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding: 40px 20px;
         }
-        header h1 { margin: 0; font-size: 2.2rem; }
-        header p { margin: 0.5rem 0 0; opacity: 0.9; }
+
         .container {
-            max-width: 1000px;
-            margin: 2rem auto;
-            padding: 0 1.5rem;
+            max-width: 900px;
+            margin: 0 auto;
         }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+        }
+
+        header p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+
         .card {
-            background: #fff;
-            padding: 1.8rem;
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 28px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .card h2 {
+            font-size: 1.25rem;
+            color: var(--accent-blue);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-top: 10px;
+        }
+
+        .info-item {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 12px 16px;
             border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            margin-bottom: 1.5rem;
+            border-left: 3px solid var(--accent-blue);
         }
-        h2 { color: #1e3d59; border-bottom: 2px solid #e8e8e8; padding-bottom: 0.5rem; }
-        ul { padding-left: 1.2rem; }
-        li { margin-bottom: 0.5rem; }
-        .badge {
-            display: inline-block;
-            background: #ff6e40;
-            color: #fff;
-            padding: 0.3rem 0.8rem;
-            border-radius: 4px;
+
+        .info-item span {
+            display: block;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .info-item strong {
+            font-size: 0.95rem;
+            color: var(--text-primary);
+        }
+
+        ul {
+            list-style: none;
+            margin-top: 10px;
+        }
+
+        ul li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+        }
+
+        ul li::before {
+            content: "•";
+            color: var(--accent-blue);
             font-weight: bold;
-            font-size: 0.9rem;
+            font-size: 1.2rem;
+            position: absolute;
+            left: 0;
+            top: -2px;
         }
+
+        .btn-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .btn-streamlit {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background-color: var(--accent-red);
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 1rem;
+            padding: 14px 28px;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 4px 14px rgba(255, 75, 75, 0.3);
+        }
+
+        .btn-streamlit:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 75, 75, 0.4);
+        }
+
         footer {
             text-align: center;
-            padding: 1.5rem;
-            background: #e8e8e8;
-            color: #666;
-            font-size: 0.9rem;
+            margin-top: 40px;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>🚗 Análise de Acidentes de Trânsito no Brasil</h1>
-        <p>Linguagem de Programação – Análise e Visualização de Dados com Python</p>
-    </header>
-
     <div class="container">
+        <header>
+            <h1>🚗 Análise de Acidentes de Trânsito no Brasil</h1>
+            <p>Linguagem de Programação — Análise e Visualização de Dados com Python</p>
+        </header>
+
         <div class="card">
             <h2>📌 Informações do Projeto</h2>
-            <p><strong>Professor:</strong> Alexandre Neves Louzada</p>
-            <p><strong>Aluno:</strong> Carlos Gabriel Anselmo Da Silva</p>
-            <p><strong>Tema 5:</strong> Acidentes de Trânsito no Brasil</p>
-            <p><span class="badge">Avaliação G1</span></p>
+            <div class="info-grid">
+                <div class="info-item">
+                    <span>Professor</span>
+                    <strong>Alexandre Neves Louzada</strong>
+                </div>
+                <div class="info-item">
+                    <span>Aluno</span>
+                    <strong>Carlos Gabriel Anselmo Da Silva</strong>
+                </div>
+                <div class="info-item">
+                    <span>Tema</span>
+                    <strong>Tema 5: Acidentes de Trânsito</strong>
+                </div>
+                <div class="info-item">
+                    <span>Avaliação</span>
+                    <strong>G1 - Projeto Prático</strong>
+                </div>
+            </div>
         </div>
 
         <div class="card">
             <h2>🎯 Objetivos e Problema de Pesquisa</h2>
-            <p>O objetivo deste projeto é analisar o panorama de acidentes de trânsito em rodovias e vias brasileiras, identificando fatores geográficos e climáticos que influenciam a gravidade das ocorrências.</p>
+            <p style="color: var(--text-secondary); margin-bottom: 12px;">
+                O objetivo deste projeto é analisar o panorama de acidentes de trânsito em rodovias e vias brasileiras, identificando fatores geográficos e climáticos que influenciam a gravidade das ocorrências.
+            </p>
             <ul>
                 <li><strong>KPI Principal:</strong> Taxa de Severidade (Média de vítimas e óbitos por acidente).</li>
                 <li><strong>Tecnologias Utilizadas:</strong> Python, Pandas, Matplotlib, Seaborn, Plotly, SQLAlchemy (SQLite), Streamlit e HTML5.</li>
             </ul>
         </div>
 
-        <div class="card">
-            <h2>📊 Dashboard Interativo</h2>
-            <p>A aplicação interativa completa para exploração dos dados filtrados por ano, região, UF e clima pode ser acedida no Streamlit Cloud.</p>
+        <div class="card" style="text-align: center;">
+            <h2>📊 Dashboard Interativo Streamlit</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 20px;">
+                Acesse a aplicação interativa completa para exploração dinâmica dos dados filtrados por ano, região, UF e condição climática.
+            </p>
+            <div class="btn-container">
+                <a href="https://g1-acidentes-carlos-silva.streamlit.app" target="_blank" class="btn-streamlit">
+                    🚀 Acessar Dashboard Interativo
+                </a>
+            </div>
         </div>
-    </div>
 
-    <footer>
-        &copy; 2026 - Carlos Gabriel Anselmo Da Silva | Projeto Académico
-    </footer>
+        <footer>
+            <p>© 2026 - Carlos Gabriel Anselmo Da Silva | Projeto Acadêmico</p>
+        </footer>
+    </div>
 
 </body>
 </html>
