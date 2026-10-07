@@ -13,6 +13,7 @@
             --text-primary: #fafafa;
             --text-secondary: #a3adc2;
             --accent-blue: #4f8bf9;
+            --accent-green: #2ea043;
             --accent-red: #ff4b4b;
             --accent-hover: #e03e3e;
         }
@@ -100,6 +101,32 @@
             color: var(--text-primary);
         }
 
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px;
+            margin-top: 10px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--card-border);
+            padding: 16px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-card h3 {
+            font-size: 1.5rem;
+            color: var(--accent-blue);
+            margin-bottom: 4px;
+        }
+
+        .stat-card p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
         ul {
             list-style: none;
             margin-top: 10px;
@@ -123,7 +150,10 @@
         }
 
         .btn-container {
-            text-align: center;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 16px;
             margin-top: 20px;
         }
 
@@ -149,6 +179,28 @@
             box-shadow: 0 6px 20px rgba(255, 75, 75, 0.4);
         }
 
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--card-border);
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 0.95rem;
+            padding: 14px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-color: var(--accent-blue);
+            transform: translateY(-2px);
+        }
+
         footer {
             text-align: center;
             margin-top: 40px;
@@ -165,6 +217,7 @@
             <p>Linguagem de Programação — Análise e Visualização de Dados com Python</p>
         </header>
 
+        <!-- Cartão de Informações Acadêmicas -->
         <div class="card">
             <h2>📌 Informações do Projeto</h2>
             <div class="info-grid">
@@ -187,6 +240,26 @@
             </div>
         </div>
 
+        <!-- Métrica/Visão Geral dos Dados -->
+        <div class="card">
+            <h2>📈 Cobertura da Base de Dados</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>2015 – 2024</h3>
+                    <p>Série Histórica Analisada</p>
+                </div>
+                <div class="stat-card">
+                    <h3>5 Regiões</h3>
+                    <p>Abrangência Nacional (27 UFs)</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Multi-fator</h3>
+                    <p>Clima, Tipo & Rodovia</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Objetivos e Tecnologias -->
         <div class="card">
             <h2>🎯 Objetivos e Problema de Pesquisa</h2>
             <p style="color: var(--text-secondary); margin-bottom: 12px;">
@@ -194,18 +267,34 @@
             </p>
             <ul>
                 <li><strong>KPI Principal:</strong> Taxa de Severidade (Média de vítimas e óbitos por acidente).</li>
+                <li><strong>Pipeline de Dados:</strong> Carga via SQLite e backup automático via Repositório CSV.</li>
                 <li><strong>Tecnologias Utilizadas:</strong> Python, Pandas, Matplotlib, Seaborn, Plotly, SQLAlchemy (SQLite), Streamlit e HTML5.</li>
             </ul>
         </div>
 
+        <!-- Recursos e Funcionalidades do Dashboard -->
+        <div class="card">
+            <h2>⚡ Recursos do Dashboard</h2>
+            <ul>
+                <li><strong>Filtros Interativos:</strong> Seleção dinâmica por Ano, Região, UF e Condição Climática.</li>
+                <li><strong>Evolução Temporal:</strong> Comparativo ano a ano entre volume total de acidentes e óbitos.</li>
+                <li><strong>Análise Geográfica & Climática:</strong> Identificação da taxa de severidade por região e impacto do clima.</li>
+                <li><strong>Tabela de Registros:</strong> Consulta detalhada e completa das ocorrências filtradas.</li>
+            </ul>
+        </div>
+
+        <!-- Botões de Ação e Acesso -->
         <div class="card" style="text-align: center;">
-            <h2>📊 Dashboard Interativo Streamlit</h2>
+            <h2>📊 Dashboard Interativo & Repositório</h2>
             <p style="color: var(--text-secondary); margin-bottom: 20px;">
-                Acesse a aplicação interativa completa para exploração dinâmica dos dados filtrados por ano, região, UF e condição climática.
+                Acesse a aplicação completa no Streamlit Cloud ou consulte o código-fonte do projeto.
             </p>
             <div class="btn-container">
                 <a href="https://g1-acidentes-carlos-silva.streamlit.app" target="_blank" class="btn-streamlit">
                     🚀 Acessar Dashboard Interativo
+                </a>
+                <a href="https://github.com/AlexandreLouzada/Dados-Simulados-G2" target="_blank" class="btn-secondary">
+                    📁 Repositório de Dados (G2)
                 </a>
             </div>
         </div>
