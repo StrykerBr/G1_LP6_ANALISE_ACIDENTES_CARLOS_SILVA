@@ -11,15 +11,19 @@ st.set_page_config(
     layout="wide"
 )
 
-# Estilo e Cabeçalho (Título em tamanho proporcional)
+# Estilo e Cabeçalho
 st.header("🚗 Análise e Monitoramento de Acidentes de Trânsito no Brasil")
 
-st.markdown("""
-**Disciplina:** Linguagem de Programação – Análise e Visualização de Dados com Python  
-**Professor:** Alexandre Neves Louzada  
-**Aluno:** Carlos Gabriel Anselmo Da Silva  
-**Tema 5:** Acidentes de Trânsito no Brasil
-""")
+# Organização em duas colunas com mais espaçamento
+col_head1, col_head2 = st.columns(2)
+
+with col_head1:
+    st.markdown("**📚 Disciplina:** Linguagem de Programação – Análise e Visualização de Dados com Python")
+    st.markdown("**👨‍🏫 Professor:** Alexandre Neves Louzada")
+
+with col_head2:
+    st.markdown("**👤 Aluno:** Carlos Gabriel Anselmo Da Silva")
+    st.markdown("**📌 Tema 5:** Acidentes de Trânsito no Brasil")
 
 st.divider()
 
