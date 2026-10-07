@@ -11,21 +11,27 @@ st.set_page_config(
     layout="wide"
 )
 
-# Estilo e Cabeçalho
-st.header("🚗 Análise e Monitoramento de Acidentes de Trânsito no Brasil")
+# --- CABEÇALHO EXPANDIDO E ESTILIZADO ---
+st.title("🚗 Análise e Monitoramento de Acidentes de Trânsito no Brasil")
 
-# Organização em duas colunas com mais espaçamento
-col_head1, col_head2 = st.columns(2)
+# Caixa / Container destacado para as informações do projeto
+with st.container(border=True):
+    col_info1, col_info2, col_info3 = st.columns([1.2, 1, 1])
+    
+    with col_info1:
+        st.markdown("### 🎓 Projeto Acadêmico")
+        st.markdown("**Disciplina:** Linguagem de Programação – Análise e Visualização de Dados com Python")
+        st.markdown("**Tema 5:** Acidentes de Trânsito no Brasil")
+        
+    with col_info2:
+        st.markdown("### 👨‍🏫 Orientação")
+        st.markdown("**Professor:** Alexandre Neves Louzada")
+        
+    with col_info3:
+        st.markdown("### 👤 Autoria")
+        st.markdown("**Aluno:** Carlos Gabriel Anselmo Da Silva")
 
-with col_head1:
-    st.markdown("**📚 Disciplina:** Linguagem de Programação – Análise e Visualização de Dados com Python")
-    st.markdown("**👨‍🏫 Professor:** Alexandre Neves Louzada")
-
-with col_head2:
-    st.markdown("**👤 Aluno:** Carlos Gabriel Anselmo Da Silva")
-    st.markdown("**📌 Tema 5:** Acidentes de Trânsito no Brasil")
-
-st.divider()
+st.markdown("<br>", unsafe_allow_html=True)
 
 # Carregamento de dados (via SQLite/Pandas)
 @st.cache_data
@@ -127,8 +133,44 @@ else:
         st.dataframe(df_filtrado, use_container_width=True)
 
     st.markdown("---")
-    st.markdown("### 💡 Conclusão Executiva")
-    st.info("""
-    **Direcionamento Estratégico:** A análise interativa permite mapear detalhadamente os pontos críticos da malha viária brasileira. 
-    Recomenda-se focar ações educativas e de fiscalização preventiva nas regiões e períodos com condições climáticas adversas e maior proporção de vítimas por ocorrência.
+
+    # --- CONCLUSÃO EXECUTIVA ROBUSTA ---
+    st.subheader("💡 Conclusão Executiva & Planos de Ação")
+    
+    st.markdown("""
+    A análise detalhada dos dados do sistema de trânsito revela padrões críticos que exigem intervenções direcionadas. 
+    Abaixo estão sintetizadas as diretrizes estratégicas para mitigação de acidentes e aumento da segurança viária:
     """)
+
+    col_rec1, col_rec2, col_rec3 = st.columns(3)
+
+    with col_rec1:
+        st.info("""
+        **🚨 1. Fiscalização Preventiva**
+        * **Foco:** Trechos de alta severidade e rodovias críticas.
+        * **Ação:** Intensificação de patrulhamento inteligente em períodos noturnos e de visibilidade reduzida.
+        * **Objetivo:** Reduzir colisões de alta velocidade e capotamentos.
+        """)
+
+    with col_rec2:
+        st.warning("""
+        **🌧️ 2. Gestão Climática Viária**
+        * **Foco:** Períodos de chuva, neblina e pista molhada.
+        * **Ação:** Instalação de painéis dinâmicos de mensagem para alerta de velocidade em tempo real.
+        * **Objetivo:** Prevenir saídas de pista e aquaplanagem.
+        """)
+
+    with col_rec3:
+        st.success("""
+        **🛠️ 3. Engenharia & Infraestrutura**
+        * **Foco:** Mapeamento de pontos pretos (*black spots*) recorrentes.
+        * **Ação:** Implementação de defensas metálicas, melhoria do asfalto drenante e sinalização refletiva.
+        * **Objetivo:** Minimizar a gravidade dos impactos e proteger vidas.
+        """)
+
+    with st.expander("📌 Síntese para Gestores e Tomadores de Decisão"):
+        st.markdown("""
+        > **Direcionamento Estratégico:** A utilização deste painel interativo viabiliza a alocação eficiente de recursos públicos e privados. 
+        > Ao cruzar fatores climáticos, geográficos e tipos de acidentes, as autoridades podem migrar de uma postura meramente reativa para uma **estratégia preditiva de segurança viária**, 
+        > priorizando trechos onde o índice de vítimas por ocorrência se mostra estatisticamente mais elevado.
+        """)
