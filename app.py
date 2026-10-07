@@ -14,12 +14,14 @@ st.set_page_config(
 # Estilo e Cabeçalho
 st.title("🚗 Análise e Monitoramento de Acidentes de Trânsito no Brasil")
 st.markdown("""
-**Disciplina:** Linguagem de Programação – Análise e Visualização de Dados com Python  
-**Professor:** Alexandre Neves Louzada  
-**Aluno:** Carlos Gabriel Anselmo Da Silva  
-**Tema 5:** Acidentes de Trânsito no Brasil
----
-""")
+<div style="font-size: 15px; color: #a3adc2; margin-bottom: 20px; line-height: 1.6;">
+    <b>Disciplina:</b> Linguagem de Programação – Análise e Visualização de Dados com Python<br>
+    <b>Professor:</b> Alexandre Neves Louzada<br>
+    <b>Aluno:</b> Carlos Gabriel Anselmo Da Silva<br>
+    <b>Tema 5:</b> Acidentes de Trânsito no Brasil
+</div>
+<hr style="margin-top: 10px; margin-bottom: 25px; border-color: #262730;">
+""", unsafe_allow-html=True)
 
 # Carregamento de dados (via SQLite/Pandas)
 @st.cache_data
@@ -126,3 +128,6 @@ else:
     **Direcionamento Estratégico:** A análise interativa permite mapear detalhadamente os pontos críticos da malha viária brasileira. 
     Recomenda-se focar ações educativas e de fiscalização preventiva nas regiões e períodos com condições climáticas adversas e maior proporção de vítimas por ocorrência.
     """)
+
+
+Só copiar esse código, substituir no seu `app.py` no GitHub e salvar (**Commit changes**)! O Streamlit atualizará na hora.
