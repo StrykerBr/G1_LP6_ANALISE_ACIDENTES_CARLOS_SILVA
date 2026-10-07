@@ -16,7 +16,6 @@
             --accent-green: #2ea043;
             --accent-red: #ff4b4b;
             --accent-hover: #e03e3e;
-            --tag-bg: rgba(79, 139, 249, 0.1);
         }
 
         * {
@@ -34,7 +33,7 @@
         }
 
         .container {
-            max-width: 920px;
+            max-width: 900px;
             margin: 0 auto;
         }
 
@@ -46,7 +45,7 @@
         }
 
         header h1 {
-            font-size: 2.2rem;
+            font-size: 2rem;
             font-weight: 700;
             color: var(--text-primary);
             margin-bottom: 10px;
@@ -54,7 +53,7 @@
 
         header p {
             color: var(--text-secondary);
-            font-size: 1.05rem;
+            font-size: 1rem;
         }
 
         .card {
@@ -75,6 +74,7 @@
             gap: 10px;
         }
 
+        /* Informações do projeto */
         .info-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -91,7 +91,7 @@
 
         .info-item span {
             display: block;
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             color: var(--text-secondary);
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -102,41 +102,56 @@
             color: var(--text-primary);
         }
 
-        /* Tech Tags */
-        .tech-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 12px;
+        /* Métricas / Stats de Cobertura */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px;
+            margin-top: 10px;
         }
 
-        .tag {
-            background: var(--tag-bg);
+        .stat-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--card-border);
+            padding: 16px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-card h3 {
+            font-size: 1.4rem;
             color: var(--accent-blue);
-            border: 1px solid rgba(79, 139, 249, 0.2);
-            padding: 4px 12px;
-            border-radius: 16px;
-            font-size: 0.85rem;
-            font-weight: 600;
+            margin-bottom: 4px;
         }
 
-        /* Highlights Cards */
-        .highlights-grid {
+        .stat-card p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        /* Destaques sem bullets (Substituindo a lista por Grid Visual) */
+        .feature-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
             gap: 16px;
-            margin-top: 12px;
+            margin-top: 16px;
         }
 
-        .highlight-card {
+        .feature-box {
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid var(--card-border);
-            padding: 18px;
             border-radius: 8px;
+            padding: 18px;
+            transition: border-color 0.2s ease;
         }
 
-        .highlight-card h3 {
-            font-size: 1rem;
+        .feature-box:hover {
+            border-color: rgba(79, 139, 249, 0.4);
+        }
+
+        .feature-title {
+            font-size: 0.95rem;
+            font-weight: 700;
             color: var(--text-primary);
             margin-bottom: 6px;
             display: flex;
@@ -144,38 +159,34 @@
             gap: 8px;
         }
 
-        .highlight-card p {
+        .feature-desc {
             font-size: 0.88rem;
             color: var(--text-secondary);
         }
 
-        ul {
-            list-style: none;
-            margin-top: 10px;
+        /* Badges de tecnologias */
+        .tech-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 14px;
         }
 
-        ul li {
-            position: relative;
-            padding-left: 20px;
-            margin-bottom: 8px;
-            color: var(--text-secondary);
-        }
-
-        ul li::before {
-            content: "•";
+        .pill {
+            background: rgba(79, 139, 249, 0.1);
             color: var(--accent-blue);
-            font-weight: bold;
-            font-size: 1.2rem;
-            position: absolute;
-            left: 0;
-            top: -2px;
+            border: 1px solid rgba(79, 139, 249, 0.25);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
         }
 
         .btn-container {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 14px;
+            gap: 16px;
             margin-top: 20px;
         }
 
@@ -204,126 +215,4 @@
         .btn-secondary {
             display: inline-flex;
             align-items: center;
-            justify-content: center;
-            gap: 10px;
-            background-color: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--card-border);
-            color: var(--text-primary);
-            font-weight: 600;
-            font-size: 0.95rem;
-            padding: 14px 24px;
-            border-radius: 8px;
-            text-decoration: none;
-            transition: all 0.2s ease-in-out;
-        }
-
-        .btn-secondary:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-            border-color: var(--accent-blue);
-            transform: translateY(-2px);
-        }
-
-        footer {
-            text-align: center;
-            margin-top: 40px;
-            color: var(--text-secondary);
-            font-size: 0.85rem;
-        }
-    </style>
-</head>
-<body>
-
-    <div class="container">
-        <header>
-            <h1>🚗 Análise de Acidentes de Trânsito no Brasil</h1>
-            <p>Linguagem de Programação — Análise e Visualização de Dados com Python</p>
-        </header>
-
-        <!-- Informações do Projeto -->
-        <div class="card">
-            <h2>📌 Informações do Projeto</h2>
-            <div class="info-grid">
-                <div class="info-item">
-                    <span>Professor</span>
-                    <strong>Alexandre Neves Louzada</strong>
-                </div>
-                <div class="info-item">
-                    <span>Aluno</span>
-                    <strong>Carlos Gabriel Anselmo Da Silva</strong>
-                </div>
-                <div class="info-item">
-                    <span>Tema</span>
-                    <strong>Tema 5: Acidentes de Trânsito</strong>
-                </div>
-                <div class="info-item">
-                    <span>Avaliação</span>
-                    <strong>G1 - Projeto Prático</strong>
-                </div>
-            </div>
-        </div>
-
-        <!-- Objetivos e Tecnologias -->
-        <div class="card">
-            <h2>🎯 Objetivos e Problema de Pesquisa</h2>
-            <p style="color: var(--text-secondary); margin-bottom: 14px;">
-                O objetivo deste projeto é analisar o panorama de acidentes de trânsito em rodovias e vias brasileiras, identificando fatores geográficos, temporais e climáticos que influenciam a gravidade e fatalidade das ocorrências.
-            </p>
-            <ul>
-                <li><strong>KPI Principal:</strong> Taxa de Severidade (Média de vítimas e óbitos por acidente).</li>
-                <li><strong>Fonte de Dados:</strong> Base de dados públicos de acidentes rodoviários (PRF).</li>
-            </ul>
-            <p style="color: var(--text-secondary); margin-top: 16px; margin-bottom: 8px; font-weight: 600;">Technologies & Libraries:</p>
-            <div class="tech-tags">
-                <span class="tag">Python 3</span>
-                <span class="tag">Pandas</span>
-                <span class="tag">Streamlit</span>
-                <span class="tag">Plotly</span>
-                <span class="tag">Seaborn</span>
-                <span class="tag">Matplotlib</span>
-                <span class="tag">SQLAlchemy / SQLite</span>
-                <span class="tag">HTML5 / CSS3</span>
-            </div>
-        </div>
-
-        <!-- Destaques / Key Insights -->
-        <div class="card">
-            <h2>💡 Destaques & Funcionalidades da Aplicação</h2>
-            <div class="highlights-grid">
-                <div class="highlight-card">
-                    <h3>🔍 Filtros Multidimensionais</h3>
-                    <p>Filtre interativamente a base de dados por Ano, Região, UF e Condição Climática em tempo real.</p>
-                </div>
-                <div class="highlight-card">
-                    <h3>📉 Séries Temporais</h3>
-                    <p>Acompanhamento da evolução no volume total de acidentes, feridos e fatalidades ao longo do tempo.</p>
-                </div>
-                <div class="highlight-card">
-                    <h3>🌦️ Correlação Climática</h3>
-                    <p>Cruzamento de dados entre condições meteorológicas (chuva, neblina, céu claro) e o índice de gravidade.</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Call to Action / Links -->
-        <div class="card" style="text-align: center;">
-            <h2>📊 Dashboard Interativo Streamlit</h2>
-            <p style="color: var(--text-secondary); margin-bottom: 20px;">
-                Acesse a aplicação interativa completa para exploração dinâmica dos dados ou consulte o repositório do código.
-            </p>
-            <div class="btn-container">
-                <a href="https://g1-acidentes-carlos-silva.streamlit.app" target="_blank" class="btn-streamlit">
-                    🚀 Acessar Dashboard Interativo
-                </a>
-                <a href="https://github.com/AlexandreLouzada/Dados-Simulados-G2" target="_blank" class="btn-secondary">
-                    💻 Código Fonte / Repositório
-                </a>
-            </div>
-        </div>
-
-        <footer>
-            <p>© 2026 - Carlos Gabriel Anselmo Da Silva | Projeto Acadêmico</p>
-        </footer>
-    </div>
-
-</body>
-</html>
+            justify
