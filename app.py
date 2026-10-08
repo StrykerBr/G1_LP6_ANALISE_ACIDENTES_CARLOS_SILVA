@@ -4,37 +4,27 @@ import plotly.express as px
 import plotly.graph_objects as go
 from sqlalchemy import create_engine
 
-# Configuração da página
 st.set_page_config(
     page_title="Dashboard - Acidentes de Trânsito no Brasil",
     page_icon="🚗",
     layout="wide"
 )
 
-# --- ESTILIZAÇÃO CSS CUSTOMIZADA ---
 st.markdown("""
 <style>
-    /* Títulos e subtítulos em azul */
-    h1, h2, h3, h4, h5, h6 {
-        color: #4f8bf9 !important;
-    }
-    
-    /* Borda azul na lateral esquerda dos cards internos das colunas */
     div[data-testid="stColumn"] div[data-testid="stBlock"] {
-        border-left: 3px solid #4f8bf9 !important;
+        border-left: 3px solid #3b82f6 !important;
     }
 </style>
 """, unsafe_allow_html=True)
 
-# --- CABEÇALHO PRINCIPAL ---
-st.title("🚗 Análise de Acidentes de Trânsito no Brasil")
-st.caption("Linguagem de Programação — Análise e Visualização de Dados com Python")
+st.markdown("<h1 style='text-align: center; color: white;'>🚗 Análise de Acidentes de Trânsito no Brasil</h1>", unsafe_allow_html=True)
+st.markdown("<p style='text-align: center; color: #9ca3af;'>Linguagem de Programação — Análise e Visualização de Dados com Python</p>", unsafe_allow_html=True)
 
 st.write("")
 
-# --- INFORMAÇÕES DO PROJETO (LAYOUT DA IMAGEM 1) ---
 with st.container(border=True):
-    st.markdown("### 📌 Informações do Projeto")
+    st.markdown("<h3 style='color: #3b82f6;'>📌 Informações do Projeto</h3>", unsafe_allow_html=True)
     
     col1, col2, col3, col4 = st.columns(4)
     
@@ -63,7 +53,28 @@ with st.container(border=True):
 
 st.write("")
 
-# Carregamento de dados (via SQLite/Pandas)
+with st.container(border=True):
+    st.markdown("<h3 style='color: #3b82f6;'>📈 Cobertura da Base de Dados</h3>", unsafe_allow_html=True)
+    
+    col_c1, col_c2, col_c3 = st.columns(3)
+    
+    with col_c1:
+        with st.container(border=True):
+            st.markdown("<h2 style='text-align: center; color: #3b82f6; margin:0;'>2015 – 2024</h2>", unsafe_allow_html=True)
+            st.markdown("<p style='text-align: center; color: #9ca3af; margin:0;'>Série Histórica Analisada</p>", unsafe_allow_html=True)
+            
+    with col_c2:
+        with st.container(border=True):
+            st.markdown("<h2 style='text-align: center; color: #3b82f6; margin:0;'>5 Regiões</h2>", unsafe_allow_html=True)
+            st.markdown("<p style='text-align: center; color: #9ca3af; margin:0;'>Abrangência Nacional (27 UFs)</p>", unsafe_allow_html=True)
+            
+    with col_c3:
+        with st.container(border=True):
+            st.markdown("<h2 style='text-align: center; color: #3b82f6; margin:0;'>Multi-fator</h2>", unsafe_allow_html=True)
+            st.markdown("<p style='text-align: center; color: #9ca3af; margin:0;'>Clima, Tipo & Rodovia</p>", unsafe_allow_html=True)
+
+st.write("")
+
 @st.cache_data
 def load_data():
     try:
@@ -78,7 +89,6 @@ def load_data():
 
 df = load_data()
 
-# Barra Lateral - Filtros Múltiplos
 st.sidebar.header("🔍 Filtros de Análise")
 
 anos_disponiveis = sorted(df['ano'].unique().tolist())
@@ -94,7 +104,6 @@ ufs_selecionadas = st.sidebar.multiselect("Selecione a(s) UF(s):", ufs_disponive
 climas_disponiveis = sorted(df['condicao_climatica'].unique().tolist())
 climas_selecionados = st.sidebar.multiselect("Condição Climática:", climas_disponiveis, default=climas_disponiveis)
 
-# Aplicar Filtros
 df_filtrado = df[
     (df['ano'].isin(anos_selecionados)) &
     (df['regiao'].isin(regioes_selecionadas)) &
@@ -105,8 +114,7 @@ df_filtrado = df[
 if df_filtrado.empty:
     st.warning("Nenhum dado encontrado para os filtros selecionados.")
 else:
-    # KPIs Dinâmicos
-    st.subheader("📊 Indicadores Principais (KPIs)")
+    st.markdown("<h3 style='color: #3b82f6;'>📊 Indicadores Principais (KPIs)</h3>", unsafe_allow_html=True)
     col1, col2, col3, col4 = st.columns(4)
     
     tot_acidentes = int(df_filtrado['acidentes'].sum())
@@ -121,7 +129,6 @@ else:
 
     st.markdown("---")
 
-    # Abas Organizadoras
     aba1, aba2, aba3 = st.tabs(["📈 Análise Temporal & Geográfica", "🌧️ Clima & Tipos de Acidente", "📋 Tabela de Dados"])
 
     with aba1:
@@ -164,8 +171,7 @@ else:
 
     st.markdown("---")
 
-    # --- CONCLUSÃO EXECUTIVA ---
-    st.subheader("💡 Conclusão Executiva & Planos de Ação")
+    st.markdown("<h3 style='color: #3b82f6;'>💡 Conclusão Executiva & Planos de Ação</h3>", unsafe_allow_html=True)
     
     st.write("A análise detalhada dos dados do sistema de trânsito revela padrões críticos que exigem intervenções direcionadas. Abaixo estão sintetizadas as diretrizes estratégicas para mitigação de acidentes e aumento da segurança viária:")
 
@@ -176,7 +182,7 @@ else:
         **🚨 1. Fiscalização Preventiva**
         * **Foco:** Trechos de alta severidade e rodovias críticas.
         * **Ação:** Intensificação de patrulhamento inteligente em períodos noturnos e de visibilidade reduzida.
-        * **Objetivo:** Reduzir colisões de alta velocidade e capotamentos.
+        * **Objetivo:** Reduzir collisions de alta velocidade e capotamentos.
         """)
 
     with col_rec2:
