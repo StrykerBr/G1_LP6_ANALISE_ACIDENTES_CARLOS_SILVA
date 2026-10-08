@@ -74,31 +74,31 @@
             gap: 10px;
         }
 
-        /* Informações do projeto */
+        /* Informações do projeto (4 Colunas na mesma linha) */
         .info-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 16px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
             margin-top: 10px;
         }
 
         .info-item {
             background: rgba(255, 255, 255, 0.03);
-            padding: 12px 16px;
+            padding: 12px;
             border-radius: 8px;
             border-left: 3px solid var(--accent-blue);
         }
 
         .info-item span {
             display: block;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: var(--text-secondary);
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
         .info-item strong {
-            font-size: 0.95rem;
+            font-size: 0.88rem;
             color: var(--text-primary);
         }
 
@@ -129,11 +129,19 @@
             color: var(--text-secondary);
         }
 
-        /* Destaques em Grid */
-        .feature-grid {
+        /* Grid de 2 colunas para Objetivos */
+        .feature-grid-2 {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 16px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+            margin-top: 16px;
+        }
+
+        /* Grid de 4 colunas em linha para Recursos do Dashboard */
+        .feature-grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
             margin-top: 16px;
         }
 
@@ -141,7 +149,7 @@
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid var(--card-border);
             border-radius: 8px;
-            padding: 18px;
+            padding: 16px;
             transition: border-color 0.2s ease;
         }
 
@@ -150,17 +158,17 @@
         }
 
         .feature-title {
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             font-weight: 700;
             color: var(--text-primary);
             margin-bottom: 6px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
 
         .feature-desc {
-            font-size: 0.88rem;
+            font-size: 0.82rem;
             color: var(--text-secondary);
         }
 
@@ -240,6 +248,18 @@
             color: var(--text-secondary);
             font-size: 0.85rem;
         }
+
+        /* Responsividade para telas menores */
+        @media (max-width: 768px) {
+            .info-grid, .feature-grid-4 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 480px) {
+            .info-grid, .feature-grid-2, .feature-grid-4 {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
@@ -299,7 +319,7 @@
                 O objetivo deste projeto é analisar o panorama de acidentes de trânsito em rodovias e vias brasileiras, identificando fatores geográficos e climáticos que influenciam a gravidade das ocorrências.
             </p>
             
-            <div class="feature-grid">
+            <div class="feature-grid-2">
                 <div class="feature-box">
                     <div class="feature-title">📊 KPI Principal</div>
                     <div class="feature-desc">Taxa de Severidade ponderada avaliando a média de vítimas e óbitos por ocorrência registrada.</div>
@@ -323,10 +343,10 @@
             </div>
         </div>
 
-        <!-- Recursos do Dashboard -->
+        <!-- Recursos do Dashboard (4 colunas perfeitamente alinhadas lado a lado) -->
         <div class="card">
             <h2>⚡ Recursos do Dashboard</h2>
-            <div class="feature-grid">
+            <div class="feature-grid-4">
                 <div class="feature-box">
                     <div class="feature-title">🎛️ Filtros Interativos</div>
                     <div class="feature-desc">Filtra interativamente a base de dados por Ano, Região, UF e Condição Climática em tempo real.</div>
