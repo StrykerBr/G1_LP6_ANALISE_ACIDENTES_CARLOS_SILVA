@@ -4,35 +4,25 @@ import plotly.express as px
 import plotly.graph_objects as go
 from sqlalchemy import create_engine
 
-# Configuração da página
 st.set_page_config(
     page_title="Dashboard - Acidentes de Trânsito no Brasil",
     page_icon="🚗",
     layout="wide"
 )
 
-# --- ESTILIZAÇÃO CSS CUSTOMIZADA ---
 st.markdown("""
 <style>
-    /* Títulos e subtítulos em azul */
-    h1, h2, h3, h4, h5, h6 {
+    h1 {
         color: #4f8bf9 !important;
-    }
-    
-    /* Borda azul na lateral esquerda dos cards internos das colunas */
-    div[data-testid="stColumn"] div[data-testid="stBlock"] {
-        border-left: 3px solid #4f8bf9 !important;
     }
 </style>
 """, unsafe_allow_html=True)
 
-# --- CABEÇALHO PRINCIPAL ---
 st.title("🚗 Análise de Acidentes de Trânsito no Brasil")
 st.caption("Linguagem de Programação — Análise e Visualização de Dados com Python")
 
 st.write("")
 
-# --- INFORMAÇÕES DO PROJETO (LAYOUT DA IMAGEM 1) ---
 with st.container(border=True):
     st.markdown("### 📌 Informações do Projeto")
     
@@ -63,7 +53,6 @@ with st.container(border=True):
 
 st.write("")
 
-# Carregamento de dados (via SQLite/Pandas)
 @st.cache_data
 def load_data():
     try:
@@ -78,7 +67,6 @@ def load_data():
 
 df = load_data()
 
-# Barra Lateral - Filtros Múltiplos
 st.sidebar.header("🔍 Filtros de Análise")
 
 anos_disponiveis = sorted(df['ano'].unique().tolist())
@@ -89,12 +77,11 @@ regioes_selecionadas = st.sidebar.multiselect("Selecione a(s) Região(ões):", r
 
 df_filtrado_reg = df[df['regiao'].isin(regioes_selecionadas)]
 ufs_disponiveis = sorted(df_filtrado_reg['uf'].unique().tolist())
-ufs_selecionadas = st.sidebar.multiselect("Selecione a(s) UF(s):", ufs_disponiveis, default=ufs_disponiveis)
+ufs_selecionadas = st.sidebar.multiselect("Selecione a(s) UF(s):", ufs_disponiveis, default=ufs_selecionadas)
 
 climas_disponiveis = sorted(df['condicao_climatica'].unique().tolist())
 climas_selecionados = st.sidebar.multiselect("Condição Climática:", climas_disponiveis, default=climas_disponiveis)
 
-# Aplicar Filtros
 df_filtrado = df[
     (df['ano'].isin(anos_selecionados)) &
     (df['regiao'].isin(regioes_selecionadas)) &
@@ -105,7 +92,6 @@ df_filtrado = df[
 if df_filtrado.empty:
     st.warning("Nenhum dado encontrado para os filtros selecionados.")
 else:
-    # KPIs Dinâmicos
     st.subheader("📊 Indicadores Principais (KPIs)")
     col1, col2, col3, col4 = st.columns(4)
     
@@ -121,7 +107,6 @@ else:
 
     st.markdown("---")
 
-    # Abas Organizadoras
     aba1, aba2, aba3 = st.tabs(["📈 Análise Temporal & Geográfica", "🌧️ Clima & Tipos de Acidente", "📋 Tabela de Dados"])
 
     with aba1:
@@ -164,7 +149,6 @@ else:
 
     st.markdown("---")
 
-    # --- CONCLUSÃO EXECUTIVA ---
     st.subheader("💡 Conclusão Executiva & Planos de Ação")
     
     st.write("A análise detalhada dos dados do sistema de trânsito revela padrões críticos que exigem intervenções direcionadas. Abaixo estão sintetizadas as diretrizes estratégicas para mitigação de acidentes e aumento da segurança viária:")
