@@ -1,3 +1,13 @@
+Com certeza! Isso está acontecendo porque o `auto-fit` do CSS Grid estava forçando uma quebra de linha por causa do tamanho mínimo dos cards.
+
+Ajustei as duas grids:
+
+1. **Informações do Projeto:** Agora usa `grid-template-columns: repeat(4, 1fr)` (4 colunas exatas na mesma linha).
+2. **Recursos do Dashboard:** Agora usa `grid-template-columns: repeat(4, 1fr)` (4 colunas lado a lado) com suporte a 2x2 no mobile se a tela encolher.
+
+Aqui está o código completo atualizado:
+
+```html
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -389,3 +399,5 @@
 
 </body>
 </html>
+
+```
