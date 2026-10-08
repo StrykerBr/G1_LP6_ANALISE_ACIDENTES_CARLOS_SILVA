@@ -11,6 +11,16 @@ st.set_page_config(
     layout="wide"
 )
 
+# --- ESTILIZAÇÃO CSS: TÍTULOS EM AZUL ---
+st.markdown("""
+<style>
+    /* Estilização para pintar todos os títulos e subtítulos de azul */
+    h1, h2, h3, h4, h5, h6 {
+        color: #4f8bf9 !important;
+    }
+</style>
+""", unsafe_allow_html=True)
+
 # --- CABEÇALHO EXPANDIDO E ESTILIZADO ---
 st.title("🚗 Análise e Monitoramento de Acidentes de Trânsito no Brasil")
 
