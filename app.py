@@ -77,7 +77,7 @@ regioes_selecionadas = st.sidebar.multiselect("Selecione a(s) Região(ões):", r
 
 df_filtrado_reg = df[df['regiao'].isin(regioes_selecionadas)]
 ufs_disponiveis = sorted(df_filtrado_reg['uf'].unique().tolist())
-ufs_selecionadas = st.sidebar.multiselect("Selecione a(s) UF(s):", ufs_disponiveis, default=ufs_selecionadas)
+ufs_selecionadas = st.sidebar.multiselect("Selecione a(s) UF(s):", ufs_disponiveis, default=ufs_disponiveis)
 
 climas_disponiveis = sorted(df['condicao_climatica'].unique().tolist())
 climas_selecionados = st.sidebar.multiselect("Condição Climática:", climas_disponiveis, default=climas_disponiveis)
