@@ -11,35 +11,55 @@ st.set_page_config(
     layout="wide"
 )
 
-# --- ESTILIZAÇÃO CSS: TÍTULOS EM AZUL ---
+# --- ESTILIZAÇÃO CSS CUSTOMIZADA ---
 st.markdown("""
 <style>
-    /* Estilização para pintar todos os títulos e subtítulos de azul */
+    /* Títulos e subtítulos em azul */
     h1, h2, h3, h4, h5, h6 {
         color: #4f8bf9 !important;
+    }
+    
+    /* Borda azul na lateral esquerda dos cards internos das colunas */
+    div[data-testid="stColumn"] div[data-testid="stBlock"] {
+        border-left: 3px solid #4f8bf9 !important;
     }
 </style>
 """, unsafe_allow_html=True)
 
-# --- CABEÇALHO EXPANDIDO E ESTILIZADO ---
-st.title("🚗 Análise e Monitoramento de Acidentes de Trânsito no Brasil")
+# --- CABEÇALHO PRINCIPAL ---
+st.title("🚗 Análise de Acidentes de Trânsito no Brasil")
+st.caption("Linguagem de Programação — Análise e Visualização de Dados com Python")
 
-# Caixa / Container destacado para as informações do projeto
+st.write("")
+
+# --- INFORMAÇÕES DO PROJETO (LAYOUT DA IMAGEM 1) ---
 with st.container(border=True):
-    col_info1, col_info2, col_info3 = st.columns([1.2, 1, 1])
+    st.markdown("### 📌 Informações do Projeto")
     
-    with col_info1:
-        st.markdown("### 🎓 Projeto Acadêmico")
-        st.markdown("**Disciplina:** Linguagem de Programação – Análise e Visualização de Dados com Python")
-        st.markdown("**Tema 5:** Acidentes de Trânsito no Brasil")
-        
-    with col_info2:
-        st.markdown("### 👨‍🏫 Orientação")
-        st.markdown("**Professor:** Alexandre Neves Louzada")
-        
-    with col_info3:
-        st.markdown("### 👤 Autoria")
-        st.markdown("**Aluno:** Carlos Gabriel Anselmo Da Silva")
+    col1, col2, col3, col4 = st.columns(4)
+    
+    with col1:
+        with st.container(border=True):
+            st.caption("PROFESSOR")
+            st.markdown("**Alexandre Neves**")
+            st.markdown("**Louzada**")
+            
+    with col2:
+        with st.container(border=True):
+            st.caption("ALUNO")
+            st.markdown("**Carlos Gabriel Anselmo**")
+            st.markdown("**Da Silva**")
+            
+    with col3:
+        with st.container(border=True):
+            st.caption("TEMA")
+            st.markdown("**Tema 5: Acidentes de**")
+            st.markdown("**Trânsito**")
+            
+    with col4:
+        with st.container(border=True):
+            st.caption("AVALIAÇÃO")
+            st.markdown("**G1 - Projeto Prático**")
 
 st.write("")
 
