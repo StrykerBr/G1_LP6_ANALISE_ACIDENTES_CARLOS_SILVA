@@ -4,173 +4,275 @@ import plotly.express as px
 import plotly.graph_objects as go
 from sqlalchemy import create_engine
 
-# Configuração da página
 st.set_page_config(
-    page_title="Dashboard - Acidentes de Trânsito no Brasil",
+    page_title="Análise de Acidentes de Trânsito",
     page_icon="🚗",
-    layout="wide"
+    layout="wide",
+    initial_sidebar_state="expanded"
 )
 
-# --- CABEÇALHO EXPANDIDO E ESTILIZADO ---
-st.title("🚗 Análise e Monitoramento de Acidentes de Trânsito no Brasil")
+st.markdown("""
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
 
-# Caixa / Container destacado para as informações do projeto
-with st.container(border=True):
-    col_info1, col_info2, col_info3 = st.columns([1.2, 1, 1])
-    
-    with col_info1:
-        st.markdown("### 🎓 Projeto Acadêmico")
-        st.markdown("**Disciplina:** Linguagem de Programação – Análise e Visualização de Dados com Python")
-        st.markdown("**Tema 5:** Acidentes de Trânsito no Brasil")
-        
-    with col_info2:
-        st.markdown("### 👨‍🏫 Orientação")
-        st.markdown("**Professor:** Alexandre Neves Louzada")
-        
-    with col_info3:
-        st.markdown("### 👤 Autoria")
-        st.markdown("**Aluno:** Carlos Gabriel Anselmo Da Silva")
+    html, body, [class*="css"] {
+        font-family: 'Inter', sans-serif;
+    }
 
-st.markdown("<br>", unsafe_allow_html=True)
+    .stApp {
+        background-color: #0e1117;
+        color: #fafafa;
+    }
 
-# Carregamento de dados (via SQLite/Pandas)
+    div[data-testid="stSidebar"] {
+        background-color: #161b22;
+        border-right: 1px solid #262730;
+    }
+
+    .info-card {
+        background-color: #161b22;
+        border: 1px solid #262730;
+        border-radius: 12px;
+        padding: 24px;
+        margin-bottom: 24px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .info-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+        margin-top: 16px;
+    }
+
+    .info-box {
+        background: rgba(255, 255, 255, 0.03);
+        padding: 14px;
+        border-radius: 8px;
+        border-left: 4px solid #4f8bf9;
+    }
+
+    .info-box label {
+        display: block;
+        font-size: 0.75rem;
+        color: #a3adc2;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 4px;
+    }
+
+    .info-box span {
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: #fafafa;
+    }
+
+    .action-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+        margin-top: 20px;
+    }
+
+    .action-card {
+        border-radius: 10px;
+        padding: 20px;
+        border: 1px solid transparent;
+    }
+
+    .action-card h3 {
+        font-size: 1.05rem;
+        font-weight: 700;
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .action-card ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .action-card li {
+        font-size: 0.88rem;
+        line-height: 1.5;
+        margin-bottom: 10px;
+        color: #e0e6ed;
+    }
+
+    .action-card li strong {
+        color: #ffffff;
+    }
+
+    .action-blue {
+        background-color: rgba(26, 54, 93, 0.4);
+        border-color: #2b6cb0;
+    }
+    .action-blue h3 { color: #63b3ed; }
+
+    .action-yellow {
+        background-color: rgba(90, 74, 22, 0.4);
+        border-color: #b7791f;
+    }
+    .action-yellow h3 { color: #f6e05e; }
+
+    .action-green {
+        background-color: rgba(20, 71, 48, 0.4);
+        border-color: #2f855a;
+    }
+    .action-green h3 { color: #68d391; }
+
+    @media (max-width: 900px) {
+        .info-grid, .action-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+""", unsafe_allow_html=True)
+
 @st.cache_data
-def load_data():
+def carregar_dados():
     try:
-        engine = create_engine('sqlite:///acidentes_transito.db')
-        df = pd.read_sql_table('acidentes', con=engine)
-    except:
-        url = "https://raw.githubusercontent.com/AlexandreLouzada/Dados-Simulados-G2/main/datasets_g2_30_temas/simulacao_acidentes_transito_brasil.csv"
-        df = pd.read_csv(url)
-        df['total_vitimas'] = df['feridos'] + df['obitos']
-        df['taxa_severidade'] = (df['total_vitimas'] / df['acidentes']).round(4)
+        engine = create_engine('sqlite:///acidentes.db')
+        df = pd.read_sql('SELECT * FROM acidentes', engine)
+    except Exception:
+        df = pd.read_csv('acidentes_brasil.csv')
+    
+    if 'ano' in df.columns:
+        df['ano'] = df['ano'].astype(int)
     return df
 
-df = load_data()
+df = carregar_dados()
 
-# Barra Lateral - Filtros Múltiplos
 st.sidebar.header("🔍 Filtros de Análise")
 
-anos_disponiveis = sorted(df['ano'].unique().tolist())
+anos_disponiveis = sorted(df['ano'].unique().tolist()) if 'ano' in df.columns else []
 anos_selecionados = st.sidebar.multiselect("Selecione o(s) Ano(s):", anos_disponiveis, default=anos_disponiveis)
 
-regioes_disponiveis = sorted(df['regiao'].unique().tolist())
+regioes_disponiveis = sorted(df['regiao'].unique().tolist()) if 'regiao' in df.columns else []
 regioes_selecionadas = st.sidebar.multiselect("Selecione a(s) Região(ões):", regioes_disponiveis, default=regioes_disponiveis)
 
-df_filtrado_reg = df[df['regiao'].isin(regioes_selecionadas)]
-ufs_disponiveis = sorted(df_filtrado_reg['uf'].unique().tolist())
+ufs_disponiveis = sorted(df[df['regiao'].isin(regioes_selecionadas)]['uf'].unique().tolist()) if 'uf' in df.columns else []
 ufs_selecionadas = st.sidebar.multiselect("Selecione a(s) UF(s):", ufs_disponiveis, default=ufs_disponiveis)
 
-climas_disponiveis = sorted(df['condicao_climatica'].unique().tolist())
-climas_selecionados = st.sidebar.multiselect("Condição Climática:", climas_disponiveis, default=climas_disponiveis)
+clima_disponivel = sorted(df['condicao_metereologica'].unique().tolist()) if 'condicao_metereologica' in df.columns else []
+clima_selecionado = st.sidebar.multiselect("Condição Climática:", clima_disponivel, default=clima_disponivel)
 
-# Aplicar Filtros
 df_filtrado = df[
     (df['ano'].isin(anos_selecionados)) &
     (df['regiao'].isin(regioes_selecionadas)) &
     (df['uf'].isin(ufs_selecionadas)) &
-    (df['condicao_climatica'].isin(climas_selecionados))
+    (df['condicao_metereologica'].isin(clima_selecionado))
 ]
 
-if df_filtrado.empty:
-    st.warning("Nenhum dado encontrado para os filtros selecionados.")
-else:
-    # KPIs Dinâmicos
-    st.subheader("📊 Indicadores Principais (KPIs)")
-    col1, col2, col3, col4 = st.columns(4)
+st.title("🚗 Análise e Monitoramento de Acidentes de Trânsito no Brasil")
+
+st.markdown("""
+<div class="info-card">
+    <div class="info-grid">
+        <div class="info-box">
+            <label>🎓 Projeto Acadêmico</label>
+            <span>Linguagem de Programação — Python</span>
+        </div>
+        <div class="info-box">
+            <label>👨‍🏫 Orientação</label>
+            <span>Prof. Alexandre Neves Louzada</span>
+        </div>
+        <div class="info-box">
+            <label>👤 Autoria</label>
+            <span>Carlos Gabriel Anselmo Da Silva</span>
+        </div>
+    </div>
+</div>
+""", unsafe_allow_html=True)
+
+st.subheader("📊 Indicadores Principais (KPIs)")
+
+col1, col2, col3, col4 = st.columns(4)
+total_acidentes = len(df_filtrado)
+total_vitimas = df_filtrado['vitimas'].sum() if 'vitimas' in df_filtrado.columns else 0
+total_obitos = df_filtrado['mortos'].sum() if 'mortos' in df_filtrado.columns else 0
+media_severidade = df_filtrado['taxa_severidade'].mean() if 'taxa_severidade' in df_filtrado.columns else 0.0
+
+col1.metric("Total de Acidentes", f"{total_acidentes:,}".replace(",", "."))
+col2.metric("Total de Vítimas", f"{int(total_vitimas):,}".replace(",", "."))
+col3.metric("Total de Óbitos", f"{int(total_obitos):,}".replace(",", "."))
+col4.metric("Taxa Média de Severidade", f"{media_severidade:.2f}")
+
+st.markdown("---")
+
+tab1, tab2, tab3 = st.tabs(["📈 Análise Temporal & Geográfica", "🌧️ Clima & Tipos de Acidente", "📋 Tabela de Dados"])
+
+with tab1:
+    c1, c2 = st.columns(2)
     
-    tot_acidentes = int(df_filtrado['acidentes'].sum())
-    tot_vitimas = int(df_filtrado['total_vitimas'].sum())
-    tot_obitos = int(df_filtrado['obitos'].sum())
-    taxa_media = df_filtrado['taxa_severidade'].mean()
-    
-    col1.metric("Total de Acidentes", f"{tot_acidentes:,}".replace(",", "."))
-    col2.metric("Total de Vítimas", f"{tot_vitimas:,}".replace(",", "."))
-    col3.metric("Total de Óbitos", f"{tot_obitos:,}".replace(",", "."))
-    col4.metric("Taxa Média de Severidade", f"{taxa_media:.2f}")
-
-    st.markdown("---")
-
-    # Abas Organizadoras
-    aba1, aba2, aba3 = st.tabs(["📈 Análise Temporal & Geográfica", "🌧️ Clima & Tipos de Acidente", "📋 Tabela de Dados"])
-
-    with aba1:
-        c1, c2 = st.columns(2)
-        with c1:
-            st.markdown("##### Evolução Temporal de Acidentes e Óbitos")
-            df_temp = df_filtrado.groupby('ano')[['acidentes', 'obitos']].sum().reset_index()
+    with c1:
+        st.subheader("Evolução Temporal de Acidentes e Óbitos")
+        if 'ano' in df_filtrado.columns and not df_filtrado.empty:
+            df_temp = df_filtrado.groupby('ano').agg({'id': 'count', 'mortos': 'sum'}).reset_index()
             fig_temp = go.Figure()
-            fig_temp.add_trace(go.Scatter(x=df_temp['ano'], y=df_temp['acidentes'], mode='lines+markers', name='Acidentes', line=dict(color='steelblue')))
-            fig_temp.add_trace(go.Scatter(x=df_temp['ano'], y=df_temp['obitos'], mode='lines+markers', name='Óbitos', line=dict(color='crimson')))
-            fig_temp.update_layout(margin=dict(l=20, r=20, t=30, b=20), height=350)
+            fig_temp.add_trace(go.Scatter(x=df_temp['ano'], y=df_temp['id'], mode='lines+markers', name='Acidentes', line=dict(color='#4f8bf9', width=3)))
+            fig_temp.add_trace(go.Scatter(x=df_temp['ano'], y=df_temp['mortos'], mode='lines+markers', name='Óbitos', line=dict(color='#ff4b4b', width=3)))
+            fig_temp.update_layout(template='plotly_dark', paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', margin=dict(l=20, r=20, t=30, b=20))
             st.plotly_chart(fig_temp, use_container_width=True)
 
-        with c2:
-            st.markdown("##### Taxa de Severidade por Região")
+    with c2:
+        st.subheader("Taxa de Severidade por Região")
+        if 'regiao' in df_filtrado.columns and 'taxa_severidade' in df_filtrado.columns and not df_filtrado.empty:
             df_reg = df_filtrado.groupby('regiao')['taxa_severidade'].mean().reset_index().sort_values(by='taxa_severidade', ascending=False)
             fig_reg = px.bar(df_reg, x='regiao', y='taxa_severidade', color='taxa_severidade', color_continuous_scale='Blues')
-            fig_reg.update_layout(margin=dict(l=20, r=20, t=30, b=20), height=350)
+            fig_reg.update_layout(template='plotly_dark', paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', margin=dict(l=20, r=20, t=30, b=20))
             st.plotly_chart(fig_reg, use_container_width=True)
 
-    with aba2:
-        c3, c4 = st.columns(2)
-        with c3:
-            st.markdown("##### Severidade por Condição Climática")
-            df_cli = df_filtrado.groupby('condicao_climatica')['taxa_severidade'].mean().reset_index().sort_values(by='taxa_severidade', ascending=False)
-            fig_cli = px.bar(df_cli, x='condicao_climatica', y='taxa_severidade', color='condicao_climatica', color_discrete_sequence=px.colors.qualitative.Set2)
-            fig_cli.update_layout(margin=dict(l=20, r=20, t=30, b=20), height=350)
-            st.plotly_chart(fig_cli, use_container_width=True)
+with tab2:
+    st.subheader("Impacto Climático e Causa das Ocorrências")
+    if 'condicao_metereologica' in df_filtrado.columns and not df_filtrado.empty:
+        df_clima = df_filtrado.groupby('condicao_metereologica')['id'].count().reset_index()
+        fig_clima = px.pie(df_clima, values='id', names='condicao_metereologica', hole=0.4, color_discrete_sequence=px.colors.qualitative.Pastel)
+        fig_clima.update_layout(template='plotly_dark', paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)')
+        st.plotly_chart(fig_clima, use_container_width=True)
 
-        with c4:
-            st.markdown("##### Total de Vítimas por Tipo de Acidente")
-            df_tipo = df_filtrado.groupby('tipo_acidente')['total_vitimas'].sum().reset_index().sort_values(by='total_vitimas', ascending=True)
-            fig_tipo = px.bar(df_tipo, y='tipo_acidente', x='total_vitimas', orientation='h', color='total_vitimas', color_continuous_scale='Reds')
-            fig_tipo.update_layout(margin=dict(l=20, r=20, t=30, b=20), height=350)
-            st.plotly_chart(fig_tipo, use_container_width=True)
+with tab3:
+    st.subheader("Registros Detalhados")
+    st.dataframe(df_filtrado, use_container_width=True)
 
-    with aba3:
-        st.markdown("##### Visão Detalhada dos Registros Filtrados")
-        st.dataframe(df_filtrado, use_container_width=True)
+st.markdown("---")
 
-    st.markdown("---")
+st.markdown("## 💡 Conclusão Executiva & Planos de Ação")
+st.write("A análise detalhada dos dados do sistema de trânsito revela padrões críticos que exigem intervenções direcionadas. Abaixo estão sintetizadas as diretrizes estratégicas para mitigação de acidentes e aumento da segurança viária:")
 
-    # --- CONCLUSÃO EXECUTIVA ROBUSTA ---
-    st.subheader("💡 Conclusão Executiva & Planos de Ação")
-    
-    st.markdown("""
-    A análise detalhada dos dados do sistema de trânsito revela padrões críticos que exigem intervenções direcionadas. 
-    Abaixo estão sintetizadas as diretrizes estratégicas para mitigação de acidentes e aumento da segurança viária:
+st.markdown("""
+<div class="action-grid">
+    <div class="action-card action-blue">
+        <h3>🚨 1. Fiscalização Preventiva</h3>
+        <ul>
+            <li><strong>Foco:</strong> Trechos de alta severidade e rodovias críticas.</li>
+            <li><strong>Ação:</strong> Intensificação de patrulhamento inteligente em períodos noturnos e de visibilidade reduzida.</li>
+            <li><strong>Objetivo:</strong> Reduzir colisões de alta velocidade e capotamentos.</li>
+        </ul>
+    </div>
+    <div class="action-card action-yellow">
+        <h3>🌧️ 2. Gestão Climática Viária</h3>
+        <ul>
+            <li><strong>Foco:</strong> Períodos de chuva, neblina e pista molhada.</li>
+            <li><strong>Ação:</strong> Instalação de painéis dinâmicos de mensagem para alerta de velocidade em tempo real.</li>
+            <li><strong>Objetivo:</strong> Prevenir saídas de pista e aquaplanagem.</li>
+        </ul>
+    </div>
+    <div class="action-card action-green">
+        <h3>🛠️ 3. Engenharia & Infraestrutura</h3>
+        <ul>
+            <li><strong>Foco:</strong> Mapeamento de pontos pretos (black spots) recorrentes.</li>
+            <li><strong>Ação:</strong> Implementação de defensas metálicas, melhoria do asfalto drenante e sinalização refletiva.</li>
+            <li><strong>Objetivo:</strong> Minimizar a gravidade dos impactos e proteger vidas.</li>
+        </ul>
+    </div>
+</div>
+""", unsafe_allow_html=True)
+
+with st.expander("📌 Síntese para Gestores e Tomadores de Decisão"):
+    st.write("""
+    A integração entre ações educativas, investimento direcionado na melhoria do pavimento e atuação focada da fiscalização rodoviária nos horários e locais de maior risco representa a estratégia de maior custo-benefício para a redução sustentada de vítimas fatais e acidentes graves.
     """)
-
-    col_rec1, col_rec2, col_rec3 = st.columns(3)
-
-    with col_rec1:
-        st.info("""
-        **🚨 1. Fiscalização Preventiva**
-        * **Foco:** Trechos de alta severidade e rodovias críticas.
-        * **Ação:** Intensificação de patrulhamento inteligente em períodos noturnos e de visibilidade reduzida.
-        * **Objetivo:** Reduzir colisões de alta velocidade e capotamentos.
-        """)
-
-    with col_rec2:
-        st.warning("""
-        **🌧️ 2. Gestão Climática Viária**
-        * **Foco:** Períodos de chuva, neblina e pista molhada.
-        * **Ação:** Instalação de painéis dinâmicos de mensagem para alerta de velocidade em tempo real.
-        * **Objetivo:** Prevenir saídas de pista e aquaplanagem.
-        """)
-
-    with col_rec3:
-        st.success("""
-        **🛠️ 3. Engenharia & Infraestrutura**
-        * **Foco:** Mapeamento de pontos pretos (*black spots*) recorrentes.
-        * **Ação:** Implementação de defensas metálicas, melhoria do asfalto drenante e sinalização refletiva.
-        * **Objetivo:** Minimizar a gravidade dos impactos e proteger vidas.
-        """)
-
-    with st.expander("📌 Síntese para Gestores e Tomadores de Decisão"):
-        st.markdown("""
-        > **Direcionamento Estratégico:** A utilização deste painel interativo viabiliza a alocação eficiente de recursos públicos e privados. 
-        > Ao cruzar fatores climáticos, geográficos e tipos de acidentes, as autoridades podem migrar de uma postura meramente reativa para uma **estratégia preditiva de segurança viária**, 
-        > priorizando trechos onde o índice de vítimas por ocorrência se mostra estatisticamente mais elevado.
-        """)
