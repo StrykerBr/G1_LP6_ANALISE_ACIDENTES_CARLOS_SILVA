@@ -34,7 +34,7 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-st.title("🚗 Análise de Acidentes de Trânsito no Brasil")
+st.title(" Análise de Acidentes de Trânsito no Brasil")
 st.markdown('<p class="header-caption">Linguagem de Programação — Análise e Visualização de Dados com Python</p>', unsafe_allow_html=True)
 
 st.write("")
@@ -165,7 +165,7 @@ else:
 
     st.markdown("---")
 
-    st.subheader("💡 Conclusão Executiva & Planos de Ação")
+    st.subheader(" Conclusão Executiva & Planos de Ação")
     
     st.write("A análise detalhada dos dados do sistema de trânsito revela padrões críticos que exigem intervenções direcionadas. Abaixo estão sintetizadas as diretrizes estratégicas para mitigação de acidentes e aumento da segurança viária:")
 
