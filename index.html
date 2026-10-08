@@ -129,7 +129,7 @@
             color: var(--text-secondary);
         }
 
-        /* Destaques sem bullets (Substituindo a lista por Grid Visual) */
+        /* Destaques em Grid */
         .feature-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -215,4 +215,157 @@
         .btn-secondary {
             display: inline-flex;
             align-items: center;
-            justify
+            justify-content: center;
+            gap: 10px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--card-border);
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 0.95rem;
+            padding: 14px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-color: var(--accent-blue);
+            transform: translateY(-2px);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>🚗 Análise de Acidentes de Trânsito no Brasil</h1>
+            <p>Linguagem de Programação — Análise e Visualização de Dados com Python</p>
+        </header>
+
+        <!-- Informações do Projeto -->
+        <div class="card">
+            <h2>📌 Informações do Projeto</h2>
+            <div class="info-grid">
+                <div class="info-item">
+                    <span>Professor</span>
+                    <strong>Alexandre Neves Louzada</strong>
+                </div>
+                <div class="info-item">
+                    <span>Aluno</span>
+                    <strong>Carlos Gabriel Anselmo Da Silva</strong>
+                </div>
+                <div class="info-item">
+                    <span>Tema</span>
+                    <strong>Tema 5: Acidentes de Trânsito</strong>
+                </div>
+                <div class="info-item">
+                    <span>Avaliação</span>
+                    <strong>G1 - Projeto Prático</strong>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cobertura da Base -->
+        <div class="card">
+            <h2>📈 Cobertura da Base de Dados</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>2015 – 2024</h3>
+                    <p>Série Histórica Analisada</p>
+                </div>
+                <div class="stat-card">
+                    <h3>5 Regiões</h3>
+                    <p>Abrangência Nacional (27 UFs)</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Multi-fator</h3>
+                    <p>Clima, Tipo & Rodovia</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Objetivos e Tecnologias -->
+        <div class="card">
+            <h2>🎯 Objetivos e Engenharia de Dados</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 16px;">
+                O objetivo deste projeto é analisar o panorama de acidentes de trânsito em rodovias e vias brasileiras, identificando fatores geográficos e climáticos que influenciam a gravidade das ocorrências.
+            </p>
+            
+            <div class="feature-grid">
+                <div class="feature-box">
+                    <div class="feature-title">📊 KPI Principal</div>
+                    <div class="feature-desc">Taxa de Severidade ponderada avaliando a média de vítimas e óbitos por ocorrência registrada.</div>
+                </div>
+                <div class="feature-box">
+                    <div class="feature-title">⚙️ Pipeline de Dados</div>
+                    <div class="feature-desc">Persistência relacional via SQLite com mecanismo automatizado de fallback para CSV.</div>
+                </div>
+            </div>
+
+            <p style="color: var(--text-secondary); margin-top: 20px; font-weight: 600; font-size: 0.9rem;">Tecnologias & Bibliotecas:</p>
+            <div class="tech-pills">
+                <span class="pill">Python</span>
+                <span class="pill">Pandas</span>
+                <span class="pill">Streamlit</span>
+                <span class="pill">Plotly</span>
+                <span class="pill">Seaborn</span>
+                <span class="pill">Matplotlib</span>
+                <span class="pill">SQLAlchemy / SQLite</span>
+                <span class="pill">HTML5</span>
+            </div>
+        </div>
+
+        <!-- Recursos do Dashboard -->
+        <div class="card">
+            <h2>⚡ Recursos do Dashboard</h2>
+            <div class="feature-grid">
+                <div class="feature-box">
+                    <div class="feature-title">🎛️ Filtros Interativos</div>
+                    <div class="feature-desc">Filtra interativamente a base de dados por Ano, Região, UF e Condição Climática em tempo real.</div>
+                </div>
+                <div class="feature-box">
+                    <div class="feature-title">📈 Evolução Temporal</div>
+                    <div class="feature-desc">Análise comparativa ano a ano entre o volume total de acidentes e taxa de fatalidades.</div>
+                </div>
+                <div class="feature-box">
+                    <div class="feature-title">🗺️ Análise Geográfica</div>
+                    <div class="feature-desc">Mapeamento e identificação do índice de severidade por estado e tipo de pista.</div>
+                </div>
+                <div class="feature-box">
+                    <div class="feature-title">📋 Tabela de Registros</div>
+                    <div class="feature-desc">Consulta direta, detalhada e estruturada das ocorrências filtradas.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Botões de Ação -->
+        <div class="card" style="text-align: center;">
+            <h2>📊 Dashboard Interativo Streamlit</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 20px;">
+                Acesse a aplicação interativa completa para exploração dinâmica dos dados ou consulte o repositório oficial do projeto.
+            </p>
+            <div class="btn-container">
+                <a href="https://g1-acidentes-carlos-silva.streamlit.app" target="_blank" class="btn-streamlit">
+                    Acessar Dashboard Interativo
+                </a>
+                <a href="https://github.com/AlexandreLouzada/Dados-Simulados-G2" target="_blank" class="btn-secondary">
+                    📁 Repositório de Dados
+                </a>
+            </div>
+        </div>
+
+        <footer>
+            <p>© 2026 - Carlos Gabriel Anselmo Da Silva | Projeto Acadêmico</p>
+        </footer>
+    </div>
+
+</body>
+</html>
