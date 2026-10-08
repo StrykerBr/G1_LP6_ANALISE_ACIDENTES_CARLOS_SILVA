@@ -31,7 +31,7 @@ with st.container(border=True):
         st.markdown("### 👤 Autoria")
         st.markdown("**Aluno:** Carlos Gabriel Anselmo Da Silva")
 
-st.markdown("<br>", unsafe_allow_html=True)
+st.write("")
 
 # Carregamento de dados (via SQLite/Pandas)
 @st.cache_data
@@ -134,13 +134,10 @@ else:
 
     st.markdown("---")
 
-    # --- CONCLUSÃO EXECUTIVA ROBUSTA ---
+    # --- CONCLUSÃO EXECUTIVA ---
     st.subheader("💡 Conclusão Executiva & Planos de Ação")
     
-    st.markdown("""
-    A análise detalhada dos dados do sistema de trânsito revela padrões críticos que exigem intervenções direcionadas. 
-    Abaixo estão sintetizadas as diretrizes estratégicas para mitigação de acidentes e aumento da segurança viária:
-    """)
+    st.write("A análise detalhada dos dados do sistema de trânsito revela padrões críticos que exigem intervenções direcionadas. Abaixo estão sintetizadas as diretrizes estratégicas para mitigação de acidentes e aumento da segurança viária:")
 
     col_rec1, col_rec2, col_rec3 = st.columns(3)
 
@@ -169,8 +166,7 @@ else:
         """)
 
     with st.expander("📌 Síntese para Gestores e Tomadores de Decisão"):
-        st.markdown("""
-        > **Direcionamento Estratégico:** A utilização deste painel interativo viabiliza a alocação eficiente de recursos públicos e privados. 
-        > Ao cruzar fatores climáticos, geográficos e tipos de acidentes, as autoridades podem migrar de uma postura meramente reativa para uma **estratégia preditiva de segurança viária**, 
-        > priorizando trechos onde o índice de vítimas por ocorrência se mostra estatisticamente mais elevado.
+        st.write("""
+        **Direcionamento Estratégico:** A utilização deste painel interativo viabiliza a alocação eficiente de recursos públicos e privados.  
+        Ao cruzar fatores climáticos, geográficos e tipos de acidentes, as autoridades podem migrar de uma postura meramente reativa para uma **estratégia preditiva de segurança viária**, priorizando trechos onde o índice de vítimas por ocorrência se mostra estatisticamente mais elevado.
         """)
